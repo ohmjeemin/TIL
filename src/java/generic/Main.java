@@ -38,10 +38,10 @@ public class Main {
         swapHelper(elements, i, j);
     }
 
-
-}
     public static <T> void swapHelper(ArrayList<T> elements, int i, int j) {
         T temp = elements.get(i);
         elements.set(i, elements.get(j));
         elements.set(j, temp);
     }
+
+}
