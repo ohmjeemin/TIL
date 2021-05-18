@@ -36,10 +36,19 @@ public class RegexPractice {
 
         // # 모든 일치 항목 찾기
         Matcher matcher2 = pattern.matcher(input);
-        while(matcher2.find()) { //
+        while(matcher2.find()) {
             String match = matcher.group();
             int matchStart = matcher.start();
             int matchEnd = matcher.end();
+        }
+
+        // # 일치 항목의 구성 요소 추출할 때는 그룹을 이용
+        String item="";
+        String currency="";
+        Matcher matcher3 = pattern.matcher(input);
+        if(matcher3.matches()){
+            item = matcher.group(1);
+            currency = matcher.group(3);
         }
     }
 }
