@@ -1,4 +1,4 @@
-package java.generic;
+package corejava9.generic;
 
 import java.util.ArrayList;
 import java.util.Collection;
