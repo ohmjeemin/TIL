@@ -7,6 +7,6 @@
 ``` fun sum(a: Int, b: Int): Int {
 return a+b
 }
-
+```
 - 표현식이 본문인 함수
-``` fun sum(a: Int, b: Int) = a+b
+``` fun sum(a: Int, b: Int) = a+b ```
