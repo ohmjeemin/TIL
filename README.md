@@ -1,8 +1,8 @@
 # TIL
 
-## 코틀린으로 쇼핑몰 앱 만들기 (21/06/03 ~)
-### <ol> 함수와 변수</ol>
-**함수**
+### 코틀린으로 쇼핑몰 앱 만들기 (21/06/03 ~)
+<ol> 함수와 변수</ol>
+**함수**<br>
 코틀린에서 함수를 선언하는 방법에는 두 가지가 있다
 - 일반적인 선언 방법
 ``` 
@@ -23,4 +23,43 @@ var d = 4
 - 가변 변수와 불변 변수
 **var** 초기화 이후에도 값을 변경할 수 있다.
 **val** 한 번 초기화되면 이후 값을 변경할 수 없다.
+
+**if-else문**
+<br>
+코틀린의 if-else문은 각 분기의 마지막 표현식의 결과값을 반환한다.
+```
+val dollor = 4
+val class = if(dollor>=4) {
+  "부자"
+} else {
+  "안부자"
+}
+```
+**when문**
+코틀린의 when은 자바의 switch보다 좀 더 유용하다.
+```
+val english = "blue"
+val korean : String
+
+when(english) {
+ "blue"-> korean = "파랑"
+ "red"-> korean = "빨강"
+ "pink"-> korean = "분홍"
+ else -> korean = "없음"
+}
+println(korean) 
+```
+when에서는 객체의 비교 또한 가능하다.
+```
+data class Person(val name:String, val age:Int) // 생성자
+
+val person = Person("Jeemin", 27)
+when(person){
+  Person("Irene", 20) -> print("The name is Irene")
+  Person("Jeemin", 27) -> print("The name is Jeemin")
+}
+```
+
+```
+
 
