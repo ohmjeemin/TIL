@@ -4,8 +4,7 @@
 ### 1. 함수와 변수
 코틀린에서 함수를 선언하는 방법에는 두 가지가 있다
 - 일반적인 선언 방법
-``` 
-fun sum(a: Int, b: Int): Int {
+``` fun sum(a: Int, b: Int): Int {
 return a+b
 }
 
