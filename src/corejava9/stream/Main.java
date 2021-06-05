@@ -1,4 +1,4 @@
-package til.java.stream;
+package corejava9.stream;
 
 import java.util.stream.Stream;
 import java.util.*;
