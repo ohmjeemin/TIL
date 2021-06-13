@@ -93,7 +93,7 @@
 
     그러나 반대로 메소드의 매개 변수가 Parent 타입은 경우, Child 타입으로 대신 받을 수는 없다. 
 
-<img src="https://blog.kakaocdn.net/dn/vU5TE/btq5MvtTlYK/KiV0je5wmDZsmNCewCARP0/img.png" alt="img" style="zoom:80%;" />
+<img src="https://blog.kakaocdn.net/dn/vU5TE/btq5MvtTlYK/KiV0je5wmDZsmNCewCARP0/img.png" alt="img" style="zoom: 50%;" />
 
 
 
@@ -103,7 +103,7 @@
 
     다음 그림을 보자. 
 
-    <img src="https://blog.kakaocdn.net/dn/cbfDRb/btq5KPGKI4R/0XZ5olqfrYZOGpWfdITG9k/img.png" alt="img" style="zoom:80%;" />
+    <img src="https://blog.kakaocdn.net/dn/cbfDRb/btq5KPGKI4R/0XZ5olqfrYZOGpWfdITG9k/img.png" alt="img" style="zoom: 50%;" />
 
     p 는 Child를 생성한 것이다. 그렇기 때문에 p.b()를 호출한다면 생성 당시 메소드인 Child에 있는 b 메소드를 호출할 것이다. 그러나 a메소드를 호출한 경우에는 Child 안에 a메소드가 없기 때문에 Parent의 a()를 호출하게 된다.
 
