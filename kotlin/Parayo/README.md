@@ -105,3 +105,22 @@ suspend fun signup(@Body signupRequest: SignupRequest) : ApiResponse<Void>
 - @POST("/api/v1/users")는 해당하는 경로로 HTTP의 POST 메서드를 호출함을 의미한다.
 - @BODY 애노테이션은 파라미텅의 값을 HTTP의 요청 본문에 쓰도록 지시한다. 이렇게 설정된 파라미터는 URI에 노출되지 않응므로 HTTPS를 이용한 암호화 통신을 통해 보안을 강화할 수 있다.
 
+
+
+##### ch05 - 네비게이션 헤더(210622)
+
+- 헤더 UI는 추후 더 복잡해질 가능성이 있기 때문에 레이아웃 코드의 가독성도 높일겸 별도 파일을 분리하도록 한다. 
+
+  ```kotlin
+  navigationView = navigationView {
+  	ProductMainNavHeader()
+  		.createView(AnkoContext.create(context, this))
+  		.run(::addHeaderView)
+      }.lparams(wrapContent, matchParent) {
+          gravity = Gravity.START
+      }
+  }
+  ```
+
+- run(::addHeaderView) 는 let, apply, run 등의 함수를 체이닝하는 일반적인 사용 방법 중 하나이다. 람다를 넣어줄 수도 있지만 파라미터가 하나일 경우 함수 레퍼런스를 넘기는 것도 허용된다.
+
