@@ -6,10 +6,10 @@ fun main() {
 }
 
 fun drawPerson() {
-   
-    drawHead()
-    drayBody()
-    drawLegs()
+//
+//    drawHead()
+//    drayBody()
+//    drawLegs()
 }
 
 suspend fun drawHead() {
