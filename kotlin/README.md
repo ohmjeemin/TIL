@@ -158,12 +158,45 @@ let(), also(), apply(), run(), with(), use() 등을 사용할 수 있다. 그리
   매개변숫가 1개인 경우, 매개변수를 생략하고 it으로 표기할 수 있다.
 
   만일 추론된 반환 자료형이 Unit이 아닌 경우에는 본문의 마지막 표현식이
-  
-  ##### companion object
-  
-  companion object 안에 함수나 변수는 static 처럼 보이게 쓸 수 있다.
 
 
+
+210707
+
+#### companion object 
+
+companion object 안에 함수나 변수는 static 처럼 보이게 쓸 수 있다.
+
+```kotlin
+class Person {
+    companion object {
+        const val MAX_AGE: Int = 500
+    }
+}
+
+fun main() {
+    printf(Person.MAX_AGE)
+}
+```
+
+class Person 내부에 companion object 라는 구문이 존재하고 해당 객체 내에 const val이 붙은 변수가 존재하게 된다. **const**가 붙은 이유는, MAX_AGE는 런타임이 아니라 **컴파일 타임**에 500이란 값으로 초기화되기 때문이다.
+
+companion object도 하나의 객체이기 때문에 이름을 붙일 수가 있다. 
+
+또한 companion object도 엄연히 하나의 객체이기 때문에 interface를 구현할 수 있다.
+
+```kotlin
+class Person {
+	companion object:Movable {
+		override fun move() {
+			println("움직여")
+		}
+	}
+}
+fun main() {
+	Person.move()
+}
+```
 
 
 
