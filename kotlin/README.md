@@ -161,9 +161,9 @@ let(), also(), apply(), run(), with(), use() 등을 사용할 수 있다. 그리
 
 
 
-210707
 
-#### companion object 
+
+###### companion object (210707)
 
 companion object 안에 함수나 변수는 static 처럼 보이게 쓸 수 있다.
 
@@ -199,4 +199,60 @@ fun main() {
 ```
 
 
+
+###### inline 함수 (210708)
+
+```kotlin
+fun doSomething(body: () -> Unit) {
+	body()
+} 
+fun callFunction(){
+    doSomething{ print("문자열 출력") }
+}
+```
+
+이 함수를 자바로 표현한다면
+
+```java
+public void doSomething(Function body) {
+	body.invoke();
+}
+public void callFunction(){
+	doSomething(System.out.println("문자열 출력"));
+}
+```
+
+위 코드는 아래와 같이 변환하게 된다.
+
+```java
+public void callFunction() {
+	doSomething(new Function() {
+		@Override
+		public void invoke() {
+			System.out.println("문자열 출력")
+		}
+	});
+}
+```
+
+문제는 위 sum이나 minus처럼 조합하는 함수가 많아질수록 계속 N개만큼 function 오브젝트가 생성된다. 이럴 때 사용하는 것이 **inline** 키워드이다. 
+
+```kotlin
+inline fun doSomething(body: ()-> Unit) {
+	body()
+}
+fun callFunction() {
+	doSomething{ print("문자열 출력!") }
+}
+```
+
+위 코드는 아래와 같이 변환된다.
+
+```java
+public void callingFuntion() {
+	System.out.print("문자열 출력")
+}
+```
+
+위와 같이 Function 인스턴스를 만들지 않고 callingFuntion 내부에 삽입되어 바로 선언되게 된다. 때문에 람다 함수와 1급 함수가 호출된 곳에서 해당 함수를 가지게 된다. 하지만 inline 함수는 주의할 점이 있는데 private 키워드를 사용해 함수를 정의할 수 없다. 다신 다른 접근 제한자인 internal을 사용해야 한다.
 
