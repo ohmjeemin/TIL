@@ -256,3 +256,91 @@ public void callingFuntion() {
 
 위와 같이 Function 인스턴스를 만들지 않고 callingFuntion 내부에 삽입되어 바로 선언되게 된다. 때문에 람다 함수와 1급 함수가 호출된 곳에서 해당 함수를 가지게 된다. 하지만 inline 함수는 주의할 점이 있는데 private 키워드를 사용해 함수를 정의할 수 없다. 다신 다른 접근 제한자인 internal을 사용해야 한다.
 
+
+
+#### object와 class 키워드 (210702)
+
+코틀린에서 클래스 키워드를 정의하는 키워드는 class이다. 간혹 object 키워드로 클래스를 정의하는 경우도 있다. object 클래스를 정의하면 Singleton 패턴이 적용되어 객체가 한번만 생성되도록 한다.  자바에서는 Singleton 패턴을 적용하기 위해 형식적인 코드(boilerplate)를 작성해야 했다. 싱글턴을 사용하는 방법 외에도, object는 익명객체를 생성할 때도 사용된다.
+
+**object 키워드 사용하는 경우**
+
+- Singleton 클래스로 만들 때
+- 익명 클래스 객체를 만들 때
+
+
+
+**1. Singleton으로 사용하는 경우**
+
+```kotlin
+object CarFactory {
+	val cars = mutableListOf<Car>()
+	fun makeCar(horsepowers:Int):Car {
+		val car = Car(horsepowers)
+		cars.add(car)
+		return car
+	}
+}
+
+class Car(power:Int) {}
+```
+
+우리는 이제 `CarFactory.makeCar`에 접근하여 Car 객체를 생성할 수도 있고, `CarFactory.cars`처럼 직접 변수에 접근할 수도 있다. CarFactory 객체는 Singleton으로 구현이 되었기 때문에 여러번 호출해도 CarFactory 객체는 한번만 생성이 된다.
+
+마치 static 메소드를 호출하는 것 처럼 보이지만, 자바로 어떻게 변환되는 지를 확인하면 싱글턴이 내부적으로 어떻게 구현되는 지 이해할 수 있다.
+
+
+
+**java로 변환된 코드**
+
+```java
+public final static CarFactory {
+    private static final List cars;
+    public static final CarFactory INSTANCE; //생성
+    public final List getCars(){ 
+        return cars; 
+    }
+    public final Car makeCar(int horsepowers) {
+        Car car = new Car(horsepowers);
+        cars.add(car);
+        return car;
+    }
+    static {
+        CarFactory var0 = new CarFactory();
+        INSTANCE = var0;
+        cars = (List)(new ArrayList());
+    }
+}
+public static final void main(@NotNull String[] args) {
+   Intrinsics.checkParameterIsNotNull(args, "args");
+   Car car = CarFactory.INSTANCE.makeCar(150);  // 여기!!! INSTANCE를 통해 접근
+   int var2 = CarFactory.INSTANCE.getCars().size();
+   System.out.println(var2);
+}
+```
+
+CarFactory.INSTANCE는 static으로 생성되기 때문에 프로그램이 로딩될 때 생성이 된다. 그래서 쓰레드 안전성이 보장되지만, 내부적으로는 공유자원을 사용하는 경우 쓰레드 안전성이 보장되지 않기 때문에 동기화 코드를 작성해야 한다.
+
+클래스 안에 Factory 패턴을 정의하고 싶다면, Factory를 companion object로 정의해주면 된다. 사실 **Car.Factory.makeCar()**로 호출해주는 것이 명시적으로 정확한 표현이지만, 코틀린은 편의를 위해 Factory를 생략할 수 있다.
+
+![image-20210712233022407](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210712233022407.png)
+
+
+
+**2. 익명객체로 사용한 예**
+
+익명객체는 이름이 없는 객체로, 한번만 사용되고 재사용되지 않을 때 사용한다. 
+
+```kotlin
+interface Vehicle {
+	fun drive(): String
+}
+fun start(vehicle:Vehicle) = println(vehicle.drive())
+```
+
+```kotlin
+start(object:Vehicle {
+	override fun drive() = "Driving really fast"
+})
+```
+
+-> start() 인자로 전달되는 object: Vehicle {...}은 익명객체이다. 이 익명객체는 Vehicle 인터페이스를 상속받은 클래스를 객체로 생성된 것을 의미한다. 익명객체이기 때문에 클래스 이름은 없고 구현부는 {...} 안에 정의해야 한다.
