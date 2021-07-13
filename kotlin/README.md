@@ -344,3 +344,11 @@ start(object:Vehicle {
 ```
 
 -> start() 인자로 전달되는 object: Vehicle {...}은 익명객체이다. 이 익명객체는 Vehicle 인터페이스를 상속받은 클래스를 객체로 생성된 것을 의미한다. 익명객체이기 때문에 클래스 이름은 없고 구현부는 {...} 안에 정의해야 한다.
+
+
+
+#### lateinit, lazy (210703)
+
+lateinit 키워드는 늦은 초기화라고 부른다. var 키워드를 사용한 경우에만 lateinit을 사용할 수 있다. 그리고 primitive type에는 적용할 수 없다. 또한 getter&setter를 정의할 수 없다.
+
+lazy 키워드는 var를 사용할 수 없고, val을 사용하는 경우에만 가능하다. val 선언 뒤 by lazy 블록에서 초기화에 필요한 코드를 작성한다. 호출 시점에서 최초 1회 초기화가 된다. 
