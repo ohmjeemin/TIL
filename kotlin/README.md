@@ -352,3 +352,9 @@ start(object:Vehicle {
 lateinit 키워드는 늦은 초기화라고 부른다. var 키워드를 사용한 경우에만 lateinit을 사용할 수 있다. 그리고 primitive type에는 적용할 수 없다. 또한 getter&setter를 정의할 수 없다.
 
 lazy 키워드는 var를 사용할 수 없고, val을 사용하는 경우에만 가능하다. val 선언 뒤 by lazy 블록에서 초기화에 필요한 코드를 작성한다. 호출 시점에서 최초 1회 초기화가 된다. 
+
+
+
+#### 405 error (210704)
+
+http 메소드가 잘못돼서 나는 오류이다. 나는 POSTmapping이 필요했는데 서버에서 @GetMapping 어노테이션을 사용하고 있었다.
