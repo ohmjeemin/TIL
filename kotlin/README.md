@@ -358,3 +358,21 @@ lazy 키워드는 var를 사용할 수 없고, val을 사용하는 경우에만 
 #### 405 error (210704)
 
 http 메소드가 잘못돼서 나는 오류이다. 나는 POSTmapping이 필요했는데 서버에서 @GetMapping 어노테이션을 사용하고 있었다.
+
+
+
+#### 함수의 매개변수가 람다식 (210715)
+
+람다식을 인자나 반환 값으로 사용할 수 있는데, 이 개념을 고차 함수라고 한다. 아래는 selectWarehouseOpen 함수의 매개변수로 blockAdd 함수를 받고 있다. 그 람다는 warehouse를 인자로 받고 있고 리턴이 없는 함수이다. 
+
+```kotlin
+suspend fun selectWarehouseOpen(blockAdd:(warehouse:EntApiWarehouseResult.Warehouse)->Unit) {
+	selectWarehouseEV.entity(EntOpen().also {
+        it.blockAddd = blockAdd
+    })
+}
+```
+
+내가 프로젝트에서 진행하고 있는 창고 선택 모달 오픈하는 함수인데, selectWarehouseOpen하면서 blockAdd 람다를 인자로 받고, selectWarehouseEV 뷰에 EntOpen()이라는 엔티티에 받은 blockAdd를 넣어서 보낸다. 그럼 뷰 안에 addEntityHook에서 해당 모달이 오픈할 때 필요한 로직들을 적어주면 된다.
+
+![image-20210715235716281](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210715235716281.png)
