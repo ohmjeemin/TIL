@@ -376,3 +376,21 @@ suspend fun selectWarehouseOpen(blockAdd:(warehouse:EntApiWarehouseResult.Wareho
 내가 프로젝트에서 진행하고 있는 창고 선택 모달 오픈하는 함수인데, selectWarehouseOpen하면서 blockAdd 람다를 인자로 받고, selectWarehouseEV 뷰에 EntOpen()이라는 엔티티에 받은 blockAdd를 넣어서 보낸다. 그럼 뷰 안에 addEntityHook에서 해당 모달이 오픈할 때 필요한 로직들을 적어주면 된다.
 
 ![image-20210715235716281](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210715235716281.png)
+
+
+
+#### 리스트 더하기...(210716)
+
+코틀린은 list끼리 더하기가 된다.
+
+```kotlin
+fun main() {
+   val list1 = listOf("지민", "지현")
+   val list2 = listOf("규섭", "기율")
+   val listResult = list1  + list2   
+    listResult.forEach{li ->
+    	print("$li ") // 결과 : 지민 지현 규섭 기율
+    }
+}
+```
+
