@@ -394,3 +394,74 @@ fun main() {
 }
 ```
 
+
+
+### 자료형
+
+#### 값 비교 vs 참조 비교
+
+이중 등호는 참조에 상관 없이 값이 동일하면 true, 값이 다르면 false를 반환한다. 삼중 등호는 값과 상관없이 참조가 동일하면 true를 반환한다. 값이 동일하더라도 참조 주소가 다르면 false를 반환한다. Int형으로 선언한 변수 a, b를 같은 값을 넣어 비교하니 true가 나온다. **코틀린 컴파일러가 기본형으로 변환하여 저장한다.** 참조 주소까지 달라지는 것은 null을 허용한 변수가 된다. 
+
+```kotlin
+val a:Int = 128
+val b:Int? = 128
+println(a==b) //true
+println(a===b) //false
+```
+
+그 이유는 Int형으로 선언된 a는 기본형으로 변환되어 스택에 128이라는 값 자체를 저장한다. 하지만 Int?형으로 선언된 b는 참조형으로 저장되므로 b에는 128이 저장된 힙의 참조 주소가 저장되어 있다. 그래서 a와 b를 삼중 등호로 비교하면 false가 나온다. 
+
+c와 d는 a에 들어 있는 값인 128이 저장되는 것이 아니라 서로 다른 128을 가리키고 있는 주소A1과 주소A2가 저장된다. 두 변수가 가리키는 값은 같으니 이중 등호로 비교하면 true가 나온다. 삼중 등호로 비교하면 두 변수의 참조 주소가 달라 false가 나온다. 
+
+![image-20210718184736591](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210718184736591.png)
+
+(출처:do it kotlin)
+
+
+
+#### 스마트 캐스트: Number
+
+어떤 값이 정수일 수도 있고 실수일 수도 있다면, 컴파일러가 자동으로 형 변환을 하는 스마트 캐스트를 사용하면 더 편리하다. Number형이 대표적인 스마트 캐스트 자료형이다.  Number형으로 정의된 변수에는 저장되는 값에 따라 정수형이나 실수형 등으로 자료형이 변환된다. 
+
+```kotlin
+fun main(){
+	var test: Number = 12.2
+	println("$test")
+	
+	test = 12 //Int
+	test = 120L //Long
+	test += 12.0f //Float
+}
+```
+
+
+
+#### 자료형 검사: is
+
+변수의 자료형을 알아내는 방법에는 is 키워드가 있다. is는 왼쪽 항의 변수가 오른쪽 항의 자료형과 같으면 true를 아니면 false를 반환한다. 
+
+```kotlin
+fun main() {
+	val num = 256
+	if(num is Int) {
+		println(num)
+	}else if(num !is Int) {
+		println("Not a Int")
+	}
+}
+```
+
+
+
+#### 자료형을 나중에 결정하는: Any 형
+
+Any형은 코틀린의 최상위 기본 클래스로 어떤 자료형이라도 될 수 있는 특수한 자료형이다. 이때 is를 사용하여 검사하면 검사한 자료형으로 **스마트 캐스트**된다.
+
+```kotlin
+val x: Any
+x = "Hello"
+if(x is String) {
+	print(x.length)
+}
+```
+
