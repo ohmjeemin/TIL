@@ -17,4 +17,5 @@ fun getArgs(vararg names:String){
     for(name in names){
         print(name)
     }
+    print(names is Array<*> )
 }

@@ -17,7 +17,7 @@ class Person {
 }
 
 fun main() {
-    printf(Person.MAX_AGE)
+    print(Person.MAX_AGE)
 }
 
 

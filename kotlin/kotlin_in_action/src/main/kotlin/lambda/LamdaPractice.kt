@@ -12,8 +12,32 @@ fun higherOrderFunction(stringParam: String, funParam: () -> String) {
     println(stringParam + funParam())
 }
 
+
+fun callByValue(b:Boolean): Boolean {
+    println("callByValue function")
+    return b
+}
+
+val lambda: () -> Boolean = {
+    println("lambda function")
+    true
+}
+fun sum(x:Int, y:Int) = x + y
+fun funcParam(a:Int, b:Int, c:(Int, Int)->Int):Int {
+    return c(a,b)
+}
+
 fun main() {
     higherOrderFunction("hello") {
         "world"
     }
+    val out: () -> Unit = { println("Hello world!") }
+    out()
+    val new = out
+    new()
+
+    val result = callByValue(lambda())
+    println(result)
+
+    funcParam(3,2, ::sum)
 }
