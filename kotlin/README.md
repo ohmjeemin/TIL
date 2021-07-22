@@ -535,3 +535,13 @@ val lambda: () -> Boolean = {
 
 
 
+##### 회사 Factory 코드
+
+template을 사용할 때 `Factory.html(template)` 으로 호출한다. Factory를 살펴보면 object로 되어있다. 어떻게 그렇게 호출이 가능하냐면 object로 클래스를 선언하면 싱글톤 객체로 만들기 때문에 실제로 INTSTANCE라는 static 변수를 만들어 자기 자신을 생성해서 넣는다. 그치만 INSTANCE는 생략이 가능하기 때문에 Factory.INSTANCE.html("".."") 을 Factory.html("...")로 object 안에 있는 메소드를 호출할 수 있다.
+
+```kotlin
+object Factory {
+	fun html(v:String):suspend()->HTMLElement = { elementFromHTML(v) }
+}
+```
+
