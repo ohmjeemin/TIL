@@ -545,3 +545,13 @@ object Factory {
 }
 ```
 
+
+
+회사 eView 
+
+```kotlin
+class eView<T> protected constructor(internal val factory:(suspend:(suspend ()->T)?){
+
+}))
+```
+
