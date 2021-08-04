@@ -555,3 +555,24 @@ class eView<T> protected constructor(internal val factory:(suspend:(suspend ()->
 }))
 ```
 
+
+
+### entity에서 데이터 함수 만들기
+
+내가 필요한 값은 주문 품목을 출력하면서 해당 originalItem의 state와(여러개를 주문했다면 states)와 그에 해당하는 qty이다. 
+
+작성된 함수는 data.originalItems를 돌면서 저 함수를 호출하도록 한다. 함수의 결과값은 String과 Int로 이루어진 Pair의 리스트이다. 여기서 String은 state가 될 것이며 qty는 해당 상태에 속하는 수량이 될 것 이다. groups를 돌면서 group하나씩의 items의 orderRowId가 일치하는 것을 찾는다. 
+
+```kotlin
+fun originItemState(originItem:EntOriginalItem):List<Pair<String?, Int>>{
+    return groups.filter {group->
+        group.items.any { gItem->
+            gItem.orderOriginalItemRowid == originItem.orderOriginalItemRowid
+        }
+    }.map{group->
+        (EnumOrderGroupCat.values().find{group.orderGroupCatRowid == it.r}?.titleKor) to
+                group.items.count { it.orderOriginalItemRowid == originItem.orderOriginalItemRowid }
+    }
+}
+```
+
