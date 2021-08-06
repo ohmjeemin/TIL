@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Router, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Link} from 'react-router-dom';
 import Rooms from './Rooms';
 
 export default function App() {
