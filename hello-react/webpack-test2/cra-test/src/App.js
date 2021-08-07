@@ -12,17 +12,17 @@ export default function App() {
               <br />
               <Link to="/rooms">방 소개</Link>
               <br />
-              <Route exact path="/" componene={Home} />
-              <Route exact path="/photo" componene={Photo} />
-              <Route exact path="/rooms" componene={Rooms} />
+              <Route exact path="/" component={Home} />
+              <Route path="/photo" component={Photo} />
+              <Route path="/rooms" component={Rooms} />
           </div>
       </BrowserRouter>
   );
 }
 
 function Home({ match }) {
-    return <h2>여기는 홈페이지입니다.</h2>
+    return <h2>여기는 홈페이지입니다.</h2>;
 }
 function Photo({ match }) {
-    return <h2>여기서 사진을 감상하세요.</h2>
+    return <h2>여기서 사진을 감상하세요.</h2>;
 }
