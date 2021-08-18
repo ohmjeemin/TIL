@@ -19,9 +19,9 @@ const Title = React.memo(({ title }) => { // React.memo로 만들어진 Title �
     return <p style={{ color: "blue" }}>{title}</p>
 });
 
-ReactDOM.render (
-    <Todo title="리액트 공부하기" desc="실전 리액트 프로그래밍을 열심히 읽는다"/>
-    document.getElementById("root");
-)
+// ReactDOM.render (
+//     <Todo title="리액트 공부하기" desc="실전 리액트 프로그래밍을 열심히 읽는다"/>
+//     document.getElementById("root");
+// )
 
 
