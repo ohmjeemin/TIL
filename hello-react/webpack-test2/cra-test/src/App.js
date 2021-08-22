@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import { MyComponent } from './useStatePractice';
-
+import React from 'react';
+import {User} from './contextAPIwithMemo'
 export default function App() {
-  return (
-      <div>
-          <MyComponent>
-          </MyComponent>
-      </div>
-  );
+    return (
+        <div>
+            <User></User>
+        </div>
+    );
 }
