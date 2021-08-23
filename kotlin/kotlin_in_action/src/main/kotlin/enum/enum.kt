@@ -12,4 +12,6 @@ fun main(args:Array<String>) {
     for(mode:Mode in modes) {
         println(mode)
     }
+
+    println(Mode.valueOf("PEN").ordinal)
 }
