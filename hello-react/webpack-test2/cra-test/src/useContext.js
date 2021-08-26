@@ -10,7 +10,13 @@ function ParentComponent() {
         </UserContext.Provider>
     );
 }
-
+function ParentComponent2() {
+    return (
+        <UserContext.Provider value={user}>
+            <ChildComponent/>
+        </UserContext.Provider>
+    );
+}
 function ChildComponent() {
     return (
         <div>
