@@ -1,105 +1,32 @@
-#### 확장함수
+## 091 const
 
-코틀린에서는 변경 불가능한 클래스를 확장하여 새로운 함수를 추가할 수 있다. 상속과는 다른 느낌으로 원래 그 클래스가 제공하는 것 처럼 사용 가능하다.
+val 변수 앞에 const 키워드를 붙이면 변수에 접근하는 코드를 변수에 저장된 값으로 대체시킨다.
 
-#### 생성자
-
-코틀린에는 하나의 주생성자를 가질 수 있고,  여러 개의 부생성자가 있다. 아래와 같이 클래스 선언 옆에서 해주면 주생성자이다. constructor가 어노테이션이나 접근 제한자를 가지고 있지 않다면 constructor를 생략할 수 있다. 
+const 키워드는 전역 변수, 오브젝트의 프로퍼티 등에 붙을 수 있다. const가 붙은 변수에는 리터럴로 이루어진 표현식만 저장이 가능하다.
 
 ```kotlin
-class Person(val name:String, val age:Int) // 가능
-class Person constructor(val name:String, val age:Int) // 가능
+const val hello  = "Hello" + "World!"
+
+object Foo {
+    const val bar = "bar"
+}
+
+fun main(args:Array<String>) {
+    println(hello)
+    println(Foo.bar)
+    println(hello)
+    println(Foo.bar)
+}
+```
+
+위 코드는 컴파일 되면 이렇게 대체된다.
+
+```kotlin
+println("Hello World!")
+println("bar")
+println("Hello World!")
+println("bar")
 ```
 
 
 
-- 코틀린 생성자에 constructor 키워드를 생략할 수 없는 경우
-
-![image-20210629235552631](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210629235552631.png)
-
-생성자가 private이 붙으니 에러가 나는 것을 볼 수 있다. 이 때 접근 제한자 뒤에 constructor를 붙이면 에러가 사라지는 것을 확인할 수 있다.
-
-![image-20210629235730544](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210629235730544.png)
-
-
-
-주생성자에는 어떤 실행문도 포함될 수 없다. 그렇기 때문에 초기화하는 코드를 넣고 싶을 경우 init 블럭을 이용하면 가능하다. 
-
-![image-20210630001020666](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210630001020666.png)
-
-
-
-코틀린은 부생성자도 가질 수 있다. 이 때 사용되는 키워드는 constructor이고, primary constructor와 다르게 생략할 수 없다. Animal 이라는 클래스 안에 부 생성자를 만들어 보았다. 
-
-![image-20210630001515951](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210630001515951.png)
-
-
-
-- 그렇다면 주생성자와 부생성자 모두 init 블럭이 있을 때, 어떻게 해야 할까?
-
-  init 블럭이 주생성자의 일부이고, 주생성자는 부생성자의 첫번째 실행문으로 실행된다. 따라서 init 블럭의 코드는 항상 부생성자의 body 보다 먼저 실행된다.
-
-  **init은 주생성자꺼 init 먼저 호출 -> 부생성자의 init 호출**
-
-- 만약 클래스가 주생성자를 갖고 있지 않아도 init 블럭은 부생성자 바디보다 먼저 실행된다.
-
-  ![image-20210630002347187](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210630002347187.png)
-
-
-
-만약 추상 클래스가 아닌 클래스가 어떤 생성자를 선언하지 않았다면, 코틀린은 자동으로 아무런 파라미터를 갖지 않은 주생성자를 생성해 준다. (자바에서도 기본 생성자를 자동으로 생성한다.) 기본적으로 constructor 는 public 이다. **참고로 자바와 달리, 코틀린에서 생성자를 통해 인스턴스를 생성할 때는 new 라는 키워드를 사용하지 않고 바로 클래스 이름과 함께 생성자를 호출하면 된다.**
-
-
-
-#### suspend function
-
-#### 코루틴
-
-코루틴은 코틀린만의 것이 아니다. 파이썬, C#, 자바스크립트 등 여러 언어에서 지원하고 있는 개념이다. 자바스크립트에서 async await를 사용한다면, 이미 코루틴을 사용해본 것이다. 
-
-
-
-**코루틴의 3가지 키워드**
-
-1. 협력형 멀티 태스킹
-2. 동시성 프로그래밍 지원
-3. 비동기 처리를 쉽게 도와줌
-
-
-
-**협력형 멀티 태스킹**
-
-Routine에는 Routine은 하나의 태스크, 함수 정도로 생각할 수 있고, main Routine과 sub Routine이 존재한다. 자바로 따지자면 main 함수가 Main Routine이라고 말할 수 있고, 그 외 다른 함수는 sub Routine이라고 말할 수 있다. 
-
-![image-20210630004326294](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210630004326294.png)
-
-코루틴도 routine이기 때문에 하나의 함수로 생각하자. 근데 이 함수에 진입할 수 있는 진입점도 여러개고, 함수를 빠져나갈 수 있는 탈출점도 여러개다. 즉, 코루틴 함수는 꼭 return 문이나 마지막 닫는 괄호를 만나지 않더라도 언제든지 중간에 나갈 수 있고, 언제든지 다시 나갔던 그 지점으로 들어올 수 있다.
-
-
-
-1. 쓰레드의 main 함수가 일반 함수를 호출하면 하나의 코루틴 블럭(함수)가 생성된다. 그 함수는 언제든 진입, 탈출할 수 있는 자격이 주어진다.
-2. 코루틴 함수가 실행되는 과정에서 suspend 키워드를 가진 함수를 만나게 되면, 더 이상 아래 코드를 실행하지 않고 멈춰서 코루틴 block 을 탈출한다.
-3. 메인 쓰레드의 다른 코드들이 실행된다. 그러나 아까 호출한 suspend 함수는 어디선가 계속 실행되고 있다.
-4. 다른 코드들이 실행되다가도, 3이 끝나면 다시 코루틴으로 진입해서 아까 멈춘 부분 아래부터 다시 실행한다.
-
-
-
-즉, 코루틴을 만나게 되면(하나의 코루틴을 만들면) 해당 함수는 코루틴으로 작동할 수 있고, 그 말은 언제든 함수 실행 중간에 나갈 수도 있고, 다시 들어올 수도 있는 자격이 부여된다는 것이다. 
-
-언제 코루틴을 중간에 나갈 수 있냐면 suspend 함수를 만나면 코루틴 밖으로 잠시 나갈 수 있다. 코루틴에서 suspend로 정의된 함수가 없다면 그냥 마지막 괄호를 만날 때 까지 계속 실행된다. 만약 suspend 함수를 만나면 더 이상 아래 코드를 실행하지 않고 drawPerson 이라는 코루틴 함수를 잠시 탈출한다.
-
-메인 쓰레드가 해당 코루틴을 탈출했다 그래도 쓰레드가 놀고 있지는 않고, 다른 코드를 실행할 수도 있다. 
-
-
-
-![image-20210630010433574](C:\Users\ohmje\AppData\Roaming\Typora\typora-user-images\image-20210630010433574.png)
-
-- 동시성 프로그래밍
-
-  병렬성 프로그래밍과 완전히 다를 개념이다. 동시성 프로그래밍은 한 순간에 하나만 하지만 빠르게 반복되는 것이다. 병렬성 프로그래밍은 동시에 여러개를 하는 것이다. 
-
-  코루틴도 루틴이다. 즉, 쓰레드가 아니라 일반 서브루틴과 비슷한 루틴이기 때문에 하나의 쓰레드에 여러개가 존재할 수 있다. 
-
-
-
-참고 : https://wooooooak.github.io/kotlin/2019/08/25/%EC%BD%94%ED%8B%80%EB%A6%B0-%EC%BD%94%EB%A3%A8%ED%8B%B4-%EA%B0%9C%EB%85%90-%EC%9D%B5%ED%9E%88%EA%B8%B0/
