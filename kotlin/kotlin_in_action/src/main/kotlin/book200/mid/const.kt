@@ -12,3 +12,9 @@ fun main(args:Array<String>) {
     println(hello)
     println(Foo.bar)
 }
+/*
+* println("Hello World!")
+* println("bar")
+* println("Hello World!")
+* println("bar")
+* */
