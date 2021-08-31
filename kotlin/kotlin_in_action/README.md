@@ -41,3 +41,45 @@ println("bar")
 Int나 String이라면 0이나 ""로 초기화하면 되지만, 사용자 정의 클래스라면 lateinit 키워드를 통해 나중에 초기화할 수 있다. 
 
 lateinit 키워드는 var프로퍼티에만 붙을 수 있다.
+
+## 093 Nullable 리시버
+
+확장 함수를 응용하면, 참조 변수에 null이 지정되어 있어도 함수 호출이 가능하게 할 수 있다.
+
+- ?. 연산자 = nullable
+
+```kotlin
+fun String?.isNumber() {
+    if(this==null){
+        println("문자열이 null입니다")
+    }
+}
+```
+
+```kotlin
+fun main(args:Array<String>){
+    val empty:String?=null
+    empty.isNumber()
+}
+```
+
+
+
+## 094 companion object의 확장함수
+
+확장 함수를 companion object에도 추가할 수 있다.
+
+```kotlin
+fun 클래스 이름.Companion.함수이름() { ... }
+```
+
+```kotlin
+class Member { companion object }
+fun Member.Companion.create() = Member()
+
+fun main(args:Array<String>) {
+    Member.create()
+} 
+```
+
+- 동반자 객체도 내용이 비어있으면 중괄호를 생략할 수 있다.
