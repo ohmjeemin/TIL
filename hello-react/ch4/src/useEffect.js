@@ -19,5 +19,5 @@ function Profile2({ userId }) {
           setUser(data);
       }
       fetchAndSetUser();
-    }, [userId]);
+    }, [userId]) ;
 }
