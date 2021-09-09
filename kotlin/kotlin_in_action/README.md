@@ -83,3 +83,72 @@ fun main(args:Array<String>) {
 ```
 
 - 동반자 객체도 내용이 비어있으면 중괄호를 생략할 수 있다.
+
+  
+
+### 095  확장 함수의 리시버 타입이 상속 관계에 있을 때
+
+```kotlin
+open class AA
+class BB:AA()
+
+//AA, BB에 확장함수 hello 주입
+fun AA.hello() = println("AAA")
+fun BB.hello() = println("BBB")
+
+fun main(args:Array<String>){
+    //타입은AA이나 실제로 BB를 가리키는 test 참조변수 선언
+    val test:AA = BB()
+    test.hello() // 확장함수는 참조변수의 타입을 그대로 따른다.
+}
+```
+
+확장 함수는 멤버 함수와는 다르게 참조 변수가 실제로 가리키는 객체의 타입을 따르지 않고, 참조 변수의 타입을 그대로 따른다.
+
+
+
+### 099 중첩 클래스(nested class)
+
+클래스 안에는 또 다른 클래스를 선언할 수 있다.
+
+```kotlin
+class Outer {
+    class Nested {
+        fun hello() = println("중첩된 클래스")
+    }
+}
+
+fun main(args:Array<String>) {
+    val instance:Outer.Nested = Outer.Nested()
+    instance.hello()
+}
+```
+
+- 중첩 클래스는 타입 이름이 {바깥 클래스}.{중첩 클래스}로 만들어진다. 생성자 이름도 마찬가지이다. 
+- Nested 클래스는 Nested라는 식별자만 Outer 클래스에 속해있을 뿐, 실제로 완전히 분리된 장소에 있다. 따라서 Nested 클래스의 멤버 함수는 Outer 클래스의 프로퍼티나 멤버 함수에 접근할 수 없다.
+
+### 100 내부 클래스 (Inner class)
+
+중첩 클래스는 단순히 식별자만 바깥 클래스에 속해있는 것이라면, 내부 클래스는 인스턴스가 바깥 클래스의 인스턴스에 완전히 소속된다.
+
+```kotlin
+class Outerr(private val value:Int) {
+    fun print() {
+        println(this.value)
+    }
+    //내부 클래스를 선언할 때는 선언문 앞에 inner 키워드를 붙인다
+    inner class Inner(private val innerValue:Int){
+        fun print() {
+            this@Outerr.print()
+            println(this.innerValue+this@Outerr.value)
+        }
+    }
+}
+
+fun main(args:Array<String>) {
+    val instance:Outerr = Outerr(610)
+    val innerInstance:Outerr.Inner = instance.Inner(40)
+    innerInstance.print()
+}
+```
+
