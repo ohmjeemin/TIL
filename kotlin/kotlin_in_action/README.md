@@ -152,3 +152,65 @@ fun main(args:Array<String>) {
 }
 ```
 
+### 101  데이터 클래스 (data class)
+
+- 클래스에는 데이터 자체의 역할만 하는 클래스와, 데이터를 이루는 역할을 하는 클래스가 있다.
+
+- 데이터 클래스를 선언하기 위해서는 클래스 선언문 앞에 data 키워드를 붙인다.
+
+- 클래스를 데이터 클래스로 선언하면 이점
+
+  - Any 클래스에 들어있는 **equals, hashCode**(객체 고유의 해시 값을 반환하는 코드. hashMap, hashSet, hashTable 클래스 등에서 객체를 식별하기 위해 사용)**, toString**  멤버 함수가 자동으로 오버라이딩한다. 
+
+  - 객체를 복사하는 **copy함수**가 자동으로 선언된다. 
+
+    *copy 멤버 함수는 모든 매개변수가 디폴트 인수를 갖고있기 때문에, first.copy(name="jeemin") 형식으로 원하는 프로퍼티만 다른 값으로 지정한 채 복사할 수 있다.*
+
+    ```kotlin
+    data class Employee(val name:String, val age:Int, val salary:Int)
+    
+    fun main(args:Array<String>) {
+        val first = Employee("John", 30, 3000)
+        val second = Employee("Page", 24, 5300)
+        val third = first.copy()
+    
+        println(first.toString())
+        println(third.toString())
+        println(first==second)
+        println(first==third)
+    }
+    ```
+
+  **데이터 클래스 만들기 규칙**
+
+  - 적어도 하나의 프로퍼티를 가져야 한다.
+
+  - 생성자 매개변수에는 반드시 var이나 val을 같이 써야 한다.
+
+  - abstract, open, sealed, inner 키워드를 붙일 수 없다.
+
+    
+
+### 102 객체 분해하기
+
+데이터 클래스의 인스턴스에 한해, 객체를 여러 개의 변수로 쪼개는 것이 가능하다.
+
+```kotlin
+data class Employee2(val name:String, val age:Int, val salary:Int)
+
+fun main(args:Array<String>) {
+    val (name, _, salary) = Employee2("jeemin", 27, 3500)
+    println(name)
+}
+```
+
+사용되지 않는 변수의 이름은 언더스코어(_)를 지정하여 무시할 수 있다.
+
+
+
+
+
+
+
+
+
