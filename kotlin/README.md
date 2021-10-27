@@ -580,3 +580,8 @@ fun originItemState(originItem:EntOriginalItem):List<Pair<String?, Int>>{
 }
 ```
 
+### 리스트 내의 요소들을 꺼내서 사용할 때
+*를 통해 해당 리스트를 꺼낸 후, toTypedArray() 메소드를 사용한다.
+![image](https://user-images.githubusercontent.com/44112843/139089464-79bfbe9e-6afa-4c03-82f9-6549d8a0ad6a.png)
+
+
