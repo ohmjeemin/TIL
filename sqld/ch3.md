@@ -74,4 +74,31 @@ EX)`ALTER TABLE user COLUMN name VARCHAR(30) NOT NULL;`
 
 ### 12. HAVING 절에 GROUP BY 있으면 HAVING에 집계 함수가 있어야 한다.
 
-### 13. CASE에서는 데이터가 없는 경우에 대한 처리도 필요하다.
+### 13. CASE문
+
+- simple case
+  - CASE location WHEN 'New York' THEN 'East' ELSE 'ETC' END
+- searched case
+  - CASE WHEN location = 'New York' THEN 'East' ELSE 'ETC' END 
+
+### 14. 단일행 NULL 관련 함수
+
+- NVL(exp1, exp2) : exp1== null이면 exp2 리턴
+- NULLIF(exp1, exp2) : exp1== exp2이면 null 리턴 exp1 != exp2 라면 exp1 리턴
+
+- COALESCE(exp1, exp2, exp3, ... ) : exp1, exp2 .... 표현식 결과 중에 최초로 NULL이 아닌 결과 리턴
+
+
+
+### 15. 다중행 함수 vs 단일행 함수
+
+- 다중행 함수는 count(), sum() 이런 여러 행이 입력되는 것
+- 단일행 함수는 to_char(), to_date() 이런 여러 행이 입력되는 것
+
+
+
+### 16. 그룹함수
+
+- 다수의 행 데이터를 한번에 처리
+- 장점 : 함수 연산 시 null 데이터를 함수 내부적으로 사전에 고려해서 null값 보유한 필드는 로직 연산 시에 제외한다.
+- 중첩된 그룹함수의 경우 최종 결과값은 1건이다!
