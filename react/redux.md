@@ -59,3 +59,135 @@ store.dispatch(conditionIncrementAction);
    store.dispatch(addTodo({ title: '영화 보기', priority: 'high' }));
    ```
 
+
+
+2.미들웨어
+
+미들웨어(middleware)는 리듀서가 액션을 처리하기 전에 실행되는 함수
+
+디버깅 목적의 로그 출력, 리듀서에서 발생한 예외를 서버에 전송하는 등 목적으로 미들웨어 활용할 수 있다.
+
+리덕스 사용 시 특별히 미들웨어를 설정하지 않았다면 발생한 액션을 곧바로 리듀서로 보내진다.
+
+**미들웨어의 기본 구조**
+
+`const myMiddleware = store => next => action => next(action);`
+
+→ 미들웨어는 함수 세 개가 중첩된 구조로 되어 있다.
+
+```jsx
+const myMiddleware = function(store) {
+	return function(next) {
+		return function(action) {
+			return next(action);
+		};
+	};
+};
+```
+
+
+
+리듀서(reducer)는 액션이 발생했을 때 새로운 상탯값을 만드는 함수
+
+**리듀서의 구조**
+
+```
+(state, action) => nextState
+```
+
+리듀서 함수의 작성 예
+
+```jsx
+function reducer(state = INITIAL_STATE, action) {
+	switch(action.type) {
+		....
+		case REMOVE_ALL:
+			return {
+				...state, // 전개연산자를 사용하여 상탯값을 불변 객체로 관리
+				todos: [],
+			};
+		case REMOVE:
+			return {
+				...state,
+				todos: [],
+			};
+		default: return state;
+	}
+}
+
+const INITIAL_STATE = { todos: [] };
+```
+
+
+
+3. 리덕스
+
+리덕스는 스토어를 생성할 때 상탯값이 없는 상태로 리듀서를 호출하기 때문에 매개변수의 기본값을 사용해서 초기 상탯값을 정의한다. `INITIAL_STATE`
+
+각 액션 타입별로 case문을 만들어서 처리한다.
+
+상탯값은 불변 객체로 관리해야 하므로, 수정할 때마다 새로운 객체를 생성한다. 전개 연산자를 사용하면 상탯값을 불변 객체로 관리할 수 있다.
+
+[전개 연산자](https://www.notion.so/a970c6a4b8ec4b05b2b94f39f520b612)
+
+처리할 액션이 없다면 상탯값을 변경하지 않는다.
+
+자바스크립트에서 불변 객체를 관리할 목적으로 나온 패키지중 하나인 **이머 패키지**
+
+- 이머를 사용해서 리듀서 작성하기
+
+→ 이머를 사용해서 불변 객체를 관리하는 예
+
+```jsx
+import produce from 'immer';
+
+const person =  { name: 'mike', age: 22 }
+const newPerson = produce(person, draft => {
+	draft.age = 32;
+});
+```
+
+draft 매개변수는 person 객체라고 생각하고 코드를 작성하면된다.
+
+draft.age를 수정해도 person 객체의 값은 변경되지 않는다!
+
+draft 객체를 수정하면 produce 함수가 새로운 객체를 반환한다.
+
+이머를 사용해서 리듀서 함수 작성하기
+
+```jsx
+function reducer(state = INITIIAL_STATE, action){
+	return produce(state, draft => {  //스위치문 전체를 produce로 감싼다
+		switch(action.type) {
+			case ADD:
+				draft.todos.push(action.todo);  
+		//이머를 사용했기 때문에 배열의 push 메서드를 사용해도 기존 상탯값은 수정되지 않고
+		//새로운 객체가 생성된다.
+				break;
+			case REMOVE_ALL:
+				draft.todos = [];
+				break;
+			case REMOVE:
+				draft.todos = draft.todos.filter(todo => todo.id !== action.id);
+				break;
+		}
+	});
+}
+```
+
+리듀서 작성 시 주의할 점 : 순수함수
+
+
+
+4. 스토어
+
+스토어는 리덕스의 상탯값을 가지는 객체다.
+
+액션의 발생은 스토어의 dispatch 메서드로 시작된다.
+
+스토어는 액션이 발생하면 미드웨어 함수를 실행하고, 리듀서를 실행해서 상탯값을 새로운 값으로 변경한다.
+
+그리고 사전에 등록된 모든 이벤트 처리 함수에게 액션의 처리가 끝났음을 알린다.
+
+스토어는 하나만 만드는 게 좋다.
+
