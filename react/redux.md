@@ -11,8 +11,8 @@
 ```jsx
 const incrementAction = {
 	type: 'INCREMENT',    //액션 객체는 type 속성값이 존재해야 한다. 
-												//type 속성값으로 액션 객체를 구분한다
-	amount: 123           //type 속성값을 제외한 나머지는 상탯값을 수정하기 위해 사용되는 정보
+		                  //type 속성값으로 액션 객체를 구분한다
+	amount: 123    //type 속성값을 제외한 나머지는 상탯값을 수정하기 위해 사용되는 정보
 };
 const conditionalIncrementAction = { 
 	type: 'CONDITIONAL_INCREMENT',
@@ -38,7 +38,9 @@ store.dispatch(conditionIncrementAction);
 
 순수 함수는 부수 효과를 발생시키지 않아야 한다.
 
-### 리덕스의 주요 개념 이해하기
+
+
+#### 리덕스의 주요 개념 이해하기
 
 1. 액션
 
