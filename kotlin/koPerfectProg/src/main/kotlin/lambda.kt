@@ -15,6 +15,7 @@ fun setBtn(button: Button, color:String, width: Int, height: Int): Button {
 }
 fun clickBtn(button:Button, block:()->Unit) {
     button.action = block
+    //test
 }
 
 fun main() {
